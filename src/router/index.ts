@@ -18,9 +18,14 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
-      path: '/troups',
-      name: 'troups',
+      path: '/base',
+      name: 'Base',
       component: () => import('@/views/BaseView.vue'),
+    },
+    {
+      path: '/missions',
+      name: 'Missões',
+      component: () => import('@/views/MissionsView.vue'),
     },
   ],
 })

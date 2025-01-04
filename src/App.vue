@@ -1,22 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 
-const types = ref(['Batalhão', 'Medicina', 'Desenvolvimento', 'Comunicação'])
+const route = useRoute()
+const title = computed(() => route.name)
 </script>
 
 <template>
-  <h1>Bem vindo a base</h1>
+  <h1>{{ title }}</h1>
   <ul class="list">
-    <li v-for="(type, index) in types" :key="index">{{ type }}</li>
+    <li><RouterLink to="/base">Base</RouterLink></li>
+    <li><RouterLink to="/missions">Missões</RouterLink></li>
   </ul>
+  <hr />
+  <RouterView />
 </template>
 
 <style scoped>
 .list {
   display: flex;
-  gap: 25%;
+  gap: 80%;
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+a {
+  color: white;
 }
 </style>
