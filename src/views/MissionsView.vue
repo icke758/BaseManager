@@ -7,14 +7,19 @@ const missionStore = useMissionsStore()
 
 const missionsRef = ref(missionStore.getMissions())
 const showDetails = ref(false)
-const currentMission = missionStore.getSelectedMission()
+const selectedMissionId = ref<number | undefined>(undefined)
 
 const chooseMission = (mission: Mission) => {
   missionStore.selectMission(mission)
 }
 
-const toggleDetails = () => {
-  showDetails.value = !showDetails.value
+const showMissionDetails = (missionId: number) => {
+  if (selectedMissionId.value !== missionId) {
+    selectedMissionId.value = missionId
+    showDetails.value = true
+  } else {
+    showDetails.value = !showDetails.value
+  }
 }
 </script>
 
@@ -23,26 +28,29 @@ const toggleDetails = () => {
     <table>
       <thead>
         <tr>
-          <th>Id</th>
           <th>Título</th>
           <th>Descrição</th>
-          <th>Escolher</th>
-          <th>Detalhes</th>
+          <th colspan="2"></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(mission, index) in missionsRef" :key="index">
-          <th scope="row">{{ mission.id }}</th>
           <td>{{ mission.title }}</td>
           <td>{{ mission.description }}</td>
-          <td><button class="monospaced-button" @click="chooseMission(mission)">Choose</button></td>
-          <td><button class="monospaced-button" @click="toggleDetails()">Detalhes</button></td>
+          <td>
+            <button class="monospaced-button" @click="chooseMission(mission)">Selecionar</button>
+          </td>
+          <td>
+            <button class="monospaced-button" @click="showMissionDetails(mission.id)">
+              Detalhes
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div v-if="showDetails">
-    <MissionDetails :mission-id="currentMission?.id" />
+  <div v-if="showDetails && selectedMissionId !== null">
+    <MissionDetails :mission-id="selectedMissionId" />
   </div>
 </template>
 
@@ -51,7 +59,7 @@ const toggleDetails = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 50vh;
 }
 
 table {
