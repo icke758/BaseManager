@@ -1,19 +1,22 @@
 <script setup lang="ts">
-import { useMissionsStore } from '@/stores/missions'
+import { useMissionsStore, type MissionPresentation } from '@/stores/missions'
 import { ref } from 'vue'
 
 const missionStore = useMissionsStore()
 const currentMission = ref(missionStore.getSelectedMission())
 
+const showCurrentMission = (currentMission: MissionPresentation | null): string => {
+  if (!currentMission) {
+    return 'Nenhuma missão selecionada.'
+  }
+  return `${currentMission.title} - ${currentMission.description} - ${currentMission.timeToComplete}h`
+}
 const types = ref(['Batalhão', 'Medicina', 'Desenvolvimento', 'Comunicação'])
 </script>
 
 <template>
   <div>Reputação</div>
-  <div>
-    Missão Atual:
-    {{ `${currentMission?.title} - ${currentMission?.description} - ${currentMission?.cost}` }}
-  </div>
+  <div>Missão Atual: {{ showCurrentMission(currentMission) }}</div>
   <ul class="list">
     <li v-for="(type, index) in types" :key="index">{{ type }}</li>
   </ul>
