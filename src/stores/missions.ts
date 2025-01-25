@@ -32,25 +32,27 @@ const missionDetails: Array<MissionDetails> = [
   },
 ]
 
+const missions: Array<Mission> = [
+  {
+    id: 1,
+    title: 'Caçar o prefeito',
+    description: 'Você precisa caçar ele logo!',
+  },
+  {
+    id: 2,
+    title: 'Salvar um gato de uma árvore',
+    description: 'Salve o gato',
+  },
+  {
+    id: 3,
+    title: 'Capture os macacos',
+    description: 'Sua missão é capturar todos os macacos',
+  },
+]
+
 export const useMissionsStore = defineStore('missions', () => {
   const getMissions = (): Array<Mission> => {
-    return [
-      {
-        id: 1,
-        title: 'Caçar o prefeito',
-        description: 'Você precisa caçar ele logo!',
-      },
-      {
-        id: 2,
-        title: 'Salvar um gato de uma árvore',
-        description: 'Salve o gato',
-      },
-      {
-        id: 3,
-        title: 'Capture os macacos',
-        description: 'Sua missão é capturar todos os macacos',
-      },
-    ]
+    return missions
   }
 
   const selectMission = (mission: Mission) => {
